@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cocoa | Tienda de ropa en Corrientes y Formosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf6f3;--ink:#2b1d1a;--mute:#7a6862;--card:#fff;--line:#eadcd6;--acc:#6b3f2e;--accfg:#fff;--rose:#f0c9c1;--ok:#1f7a55;--ask:#9a5b12;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1412;--ink:#f6ebe7;--mute:#b9a49d;--card:#271c19;--line:#3b2c28;--acc:#e3b3a2;--accfg:#2b1d1a;--rose:#4a2f2a;--ok:#6fd0a4;--ask:#e8b36a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1c1412;--ink:#f6ebe7;--mute:#b9a49d;--card:#271c19;--line:#3b2c28;--acc:#e3b3a2;--accfg:#2b1d1a;--rose:#4a2f2a;--ok:#6fd0a4;--ask:#e8b36a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Outfit,system-ui,sans-serif}
+button,select,input,textarea{font:inherit;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:700;font-size:26px;letter-spacing:.02em}
+.btn{background:var(--acc);color:var(--accfg);border:0;border-radius:999px;padding:10px 20px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,.chip:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hero{padding:56px 0 40px}
+.hero h1{font-size:clamp(38px,8vw,76px);line-height:1;margin:0 0 16px;max-width:12ch;font-weight:700}
+.hero p{font-size:18px;color:var(--mute);max-width:46ch;margin:0 0 24px}
+.hero h1.hl{max-width:none;margin:0 0 12px}.hlogo{width:min(460px,100%);height:auto;display:block}.pimg{width:100%;height:170px;object-fit:cover;display:block}.pb .btn[disabled]{opacity:.5;cursor:not-allowed}footer a{color:var(--acc)}
+.hero .row{display:flex;gap:10px;flex-wrap:wrap}
+h2{font-size:28px;margin:48px 0 16px}
+.promos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.promo{background:var(--rose);border-radius:20px;padding:22px}
+.promo b{font-size:22px;display:block;margin-bottom:4px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 16px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.prod{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.ph{height:170px;display:grid;place-items:center;font-size:54px;font-weight:700;color:rgba(255,255,255,.9)}
+.pb{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pb h3{margin:0;font-size:17px}
+.price{font-weight:700;font-size:18px}
+.tag{font-size:13px;font-weight:500}
+.tag.ok{color:var(--ok)}.tag.ask{color:var(--ask)}
+.pb select{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:7px}
+.pb .btn{margin-top:auto;text-align:center}
+.suc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.suc div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+footer{margin:56px 0 30px;color:var(--mute);font-size:14px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9;display:none}
+.scrim.open{display:block}
+aside{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--bg);z-index:10;transform:translateX(105%);transition:transform .25s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+aside.open{transform:none}
+.ah{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.ah h2{margin:0;font-size:22px}
+.ab{overflow:auto;padding:14px 18px;flex:1}
+.item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.q{display:flex;align-items:center;gap:8px;margin-top:6px}
+.q button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer}
+fieldset{border:1px solid var(--line);border-radius:14px;margin:14px 0;padding:10px 14px}
+legend{font-weight:500;padding:0 6px}
+fieldset label{display:block;padding:4px 0}
+.note{font-size:14px;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}
+.ab input[type=text],.ab textarea{width:100%;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px;margin:4px 0 10px}
+.af{padding:14px 18px;border-top:1px solid var(--line)}
+.tot{display:flex;justify-content:space-between;font-weight:700;font-size:18px;margin-bottom:10px}
+.af .btn{width:100%;text-align:center}
+.af .btn[disabled]{opacity:.5;cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){aside{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><span class="logo">Cocoa</span><button class="btn" id="open">Mi pedido (<span id="cnt">0</span>)</button></div></header>
+<main class="wrap">
+<section class="hero">
+<h1 class="hl"><img class="hlogo" src="logo.png" alt="Cocoa, indumentaria femenina y masculina"></h1>
+<p>Elegí tus prendas, armá tu pedido y mandalo por WhatsApp. Retirás en nuestras sucursales de Corrientes y Formosa o te lo enviamos.</p>
+<div class="row"><a class="btn" href="#catalogo">Ver prendas</a><a class="btn ghost" href="#promos">Ver promociones</a></div>
+</section>
+<section id="promos"><h2>Promociones</h2><div class="promos" id="promoList"></div></section>
+<section id="catalogo"><h2>Catálogo</h2><div class="chips" id="chips"></div><div class="grid" id="grid"></div>
+<p class="note">«Consultar stock» significa que traemos la prenda a pedido. Te confirmamos disponibilidad y tiempo por WhatsApp.</p></section>
+<section id="sucursales"><h2>Sucursales</h2><div class="suc" id="sucList"></div></section>
+<footer>Cocoa, Corrientes y Formosa<br><a href="https://instagram.com/cocoa.oficiall" target="_blank" rel="noopener">@cocoa.oficiall</a> · <a href="https://wa.me/5493704253747" target="_blank" rel="noopener">WhatsApp 370 4253747</a></footer>
+</main>
+<div class="scrim" id="scrim"></div>
+<aside id="cart" aria-label="Mi pedido" aria-hidden="true">
+<div class="ah"><h2>Mi pedido</h2><button class="btn ghost" id="close">Cerrar</button></div>
+<div class="ab">
+<div id="items"></div>
+<div id="checkout" hidden>
+<label for="nom">Tu nombre</label><input type="text" id="nom" autocomplete="name">
+<fieldset><legend>Cómo lo recibís</legend>
+<label><input type="radio" name="ent" value="retiro" checked> Retiro en sucursal</label>
+<label><input type="radio" name="ent" value="envio"> Envío a domicilio</label>
+<div id="sucSel"><label for="suc">Sucursal</label> <select id="suc"></select></div>
+<div id="dir" hidden><label for="addr">Dirección y localidad</label><input type="text" id="addr"></div>
+</fieldset>
+<fieldset><legend>Forma de pago</legend><div id="pays"></div><div class="note" id="payInfo"></div></fieldset>
+<label for="obs">Aclaraciones</label><textarea id="obs" rows="2" placeholder="Colores, talles alternativos, horario de retiro"></textarea>
+</div>
+</div>
+<div class="af"><div class="tot"><span>Total</span><span id="tot">$0</span></div>
+<p class="note" id="totNote" hidden></p>
+<button class="btn" id="send" disabled>Enviar pedido por WhatsApp</button></div>
+</aside>
+<script>
+/* EDITÁ ESTOS DATOS: número de WhatsApp (con 549 y sin 0 ni 15), alias, sucursales, promos y productos */
+var CFG={wa:"5493704253747",ig:"cocoa.oficiall",sheet:"",alias:"COMPLETAR.ALIAS",titular:"Nombre del titular",mp:"Completar link o alias de Mercado Pago",
+suc:{"Corrientes":"Completar dirección y horarios","Formosa":"Completar dirección y horarios"}};
+var PROMOS=[["2 remeras, precio especial","Llevando 2 remeras básicas, ahorrás. Completar condiciones."],["Envío sin cargo","En compras mayores a un monto a definir."],["Pagando en efectivo","Descuento retirando en sucursal. Completar."]];
+var CATS=["Todo","Mujer","Hombre","Niños","Accesorios"];
+var COLORS=["#b5651d","#a8556b","#4f7a6b","#5b6fa6","#8a6bb0","#c0793b"];
+var P=[
+{id:1,n:"Remera básica",c:"Mujer",p:12000,s:1,t:["S","M","L"]},
+{id:2,n:"Jean mom",c:"Mujer",p:32000,s:1,t:["36","38","40","42"]},
+{id:3,n:"Vestido de verano",c:"Mujer",p:28000,s:0,t:["S","M","L"]},
+{id:4,n:"Remera oversize",c:"Hombre",p:14000,s:1,t:["M","L","XL"]},
+{id:5,n:"Bermuda cargo",c:"Hombre",p:26000,s:0,t:["M","L","XL"]},
+{id:6,n:"Conjunto infantil",c:"Niños",p:19000,s:1,t:["4","6","8","10"]},
+{id:7,n:"Gorra",c:"Accesorios",p:8000,s:1,t:[]},
+{id:8,n:"Cinturón de cuero",c:"Accesorios",p:11000,s:0,t:[]}];
+var cart=[],cat="Todo",$=function(i){return document.getElementById(i)};
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+function money(n){return "$"+n.toLocaleString("es-AR")}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+$("promoList").innerHTML=PROMOS.map(function(x){return '<div class="promo"><b>'+esc(x[0])+'</b>'+esc(x[1])+'</div>'}).join("");
+$("sucList").innerHTML=Object.keys(CFG.suc).map(function(k){return '<div><b>'+esc(k)+'</b><br>'+esc(CFG.suc[k])+'</div>'}).join("");
+$("suc").innerHTML=Object.keys(CFG.suc).map(function(k){return '<option>'+esc(k)+'</option>'}).join("");
+function drawChips(){$("chips").innerHTML=CATS.map(function(c){return '<button class="chip" aria-pressed="'+(c===cat)+'" data-c="'+c+'">'+c+'</button>'}).join("");
+$$(".chip").forEach(function(b){b.onclick=function(){cat=b.dataset.c;drawChips();drawGrid()}})}
+function drawGrid(){$("grid").innerHTML=P.filter(function(p){return cat==="Todo"||p.c===cat}).map(function(p){
+return '<div class="prod">'+ph(p)+'<div class="pb"><h3>'+esc(p.n)+'</h3><span class="price">'+money(p.p)+'</span>'
++'<span class="tag '+(p.s===1?"ok":"ask")+'">'+(p.s===1?"En stock":p.s===2?"Agotado":"Consultar stock")+'</span>'
++(p.t.length?'<select aria-label="Talle de '+esc(p.n)+'" id="t'+p.id+'">'+p.t.map(function(t){return '<option>'+t+'</option>'}).join("")+'</select>':'')
++'<button class="btn" data-a="'+p.id+'"'+(p.s===2?' disabled':'')+'>Agregar al pedido</button></div></div>'}).join("");
+$$("[data-a]").forEach(function(b){b.onclick=function(){add(+b.dataset.a)}})}
+function add(id){var p=P.filter(function(x){return x.id===id})[0],s=$("t"+id),t=s?s.value:"";
+var f=cart.filter(function(i){return i.id===id&&i.t===t})[0];if(f)f.q++;else cart.push({id:id,t:t,q:1});draw();openCart()}
+function pay(){return document.querySelector('input[name="ent"]:checked').value}
+function drawPays(){var env=pay()==="envio",o=env?[["Transferencia bancaria","tr"],["Mercado Pago","mp"]]:[["Efectivo en sucursal","ef"],["Transferencia bancaria","tr"]];
+$("pays").innerHTML=o.map(function(x,i){return '<label><input type="radio" name="pg" value="'+x[1]+'"'+(i===0?" checked":"")+'> '+x[0]+'</label>'}).join("");
+$$('input[name="pg"]').forEach(function(r){r.onchange=info});info()}
+function info(){var v=document.querySelector('input[name="pg"]:checked').value;
+$("payInfo").innerHTML=v==="ef"?"Pagás en efectivo cuando retirás tu pedido en la sucursal.":v==="tr"?"Transferí al alias <b>"+esc(CFG.alias)+"</b> (titular: "+esc(CFG.titular)+"). Después de enviar el pedido, mandanos el comprobante en el mismo chat de WhatsApp.":"Pagá por Mercado Pago: "+esc(CFG.mp)+". Después de enviar el pedido, mandanos el comprobante en el mismo chat de WhatsApp."}
+function draw(){var n=0,tot=0,ask=false;
+$("items").innerHTML=cart.length?cart.map(function(i,k){var p=P.filter(function(x){return x.id===i.id})[0];n+=i.q;tot+=p.p*i.q;if(!p.s)ask=true;
+return '<div class="item"><div><b>'+esc(p.n)+'</b>'+(i.t?' · talle '+esc(i.t):'')+'<br><span class="tag '+(p.s?"ok":"ask")+'">'+(p.s?"En stock":"Consultar stock")+'</span><div class="q"><button aria-label="Quitar uno" data-m="'+k+'">−</button>'+i.q+'<button aria-label="Agregar uno" data-p="'+k+'">+</button></div></div><div>'+money(p.p*i.q)+'</div></div>'}).join(""):'<p>Todavía no agregaste prendas. Elegí del catálogo y aparecen acá.</p>';
+$$("[data-m]").forEach(function(b){b.onclick=function(){var i=cart[+b.dataset.m];if(--i.q<1)cart.splice(+b.dataset.m,1);draw()}});
+$$("[data-p]").forEach(function(b){b.onclick=function(){cart[+b.dataset.p].q++;draw()}});
+$("cnt").textContent=n;$("tot").textContent=money(tot);$("checkout").hidden=!cart.length;$("send").disabled=!cart.length;
+$("totNote").hidden=!ask;$("totNote").textContent="Tu pedido incluye prendas a consultar. El total es estimado hasta que confirmemos stock y precio.";}
+function openCart(){$("cart").classList.add("open");$("scrim").classList.add("open");$("cart").setAttribute("aria-hidden","false")}
+function closeCart(){$("cart").classList.remove("open");$("scrim").classList.remove("open");$("cart").setAttribute("aria-hidden","true")}
+$("open").onclick=openCart;$("close").onclick=closeCart;$("scrim").onclick=closeCart;
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCart()});
+$$('input[name="ent"]').forEach(function(r){r.onchange=function(){var e=pay()==="envio";$("sucSel").hidden=e;$("dir").hidden=!e;drawPays()}});
+$("send").onclick=function(){var nom=$("nom").value.trim();if(!nom){$("nom").focus();alert("Escribí tu nombre para enviar el pedido.");return}
+var e=pay()==="envio",g=document.querySelector('input[name="pg"]:checked').value,tot=0,L=["Hola Cocoa, quiero hacer este pedido:",""];
+cart.forEach(function(i){var p=P.filter(function(x){return x.id===i.id})[0];tot+=p.p*i.q;L.push("• "+i.q+" x "+p.n+(i.t?" (talle "+i.t+")":"")+" - "+money(p.p*i.q)+(p.s?"":" [CONSULTAR STOCK]"))});
+L.push("","Total estimado: "+money(tot),"Nombre: "+nom,e?"Envío a: "+$("addr").value.trim():"Retiro en sucursal: "+$("suc").value,
+"Forma de pago: "+(g==="ef"?"Efectivo al retirar":g==="tr"?"Transferencia (te mando el comprobante)":"Mercado Pago (te mando el comprobante)"));
+if($("obs").value.trim())L.push("Aclaraciones: "+$("obs").value.trim());
+window.open("https://wa.me/"+CFG.wa+"?text="+encodeURIComponent(L.join("\n")),"_blank")};
+function ph(p){return p.img?'<img class="pimg" loading="lazy" src="'+esc(p.img)+'" alt="'+esc(p.n)+'">':'<div class="ph" style="background:'+COLORS[p.id%COLORS.length]+'">'+esc(p.n[0])+'</div>'}
+function csv(t){var r=[],c=[],f="",q=false,i=0,h;for(;i<t.length;i++){h=t[i];if(q){if(h=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=h}else if(h=='"')q=true;else if(h==","){c.push(f);f=""}else if(h=="\n"||h=="\r"){if(h=="\r"&&t[i+1]=="\n")i++;c.push(f);r.push(c);c=[];f=""}else f+=h}if(f||c.length){c.push(f);r.push(c)}return r}
+function nz(s){return(s||"").trim()}
+function img(u){u=nz(u);var m=/drive\.google\.com/.test(u)&&(u.match(/\/d\/([\w-]+)/)||u.match(/[?&]id=([\w-]+)/));return m?"https://drive.google.com/thumbnail?id="+m[1]+"&sz=w800":u}
+function fromSheet(t){var R=csv(t),h=R.shift().map(function(x){return nz(x).toLowerCase()}),ix=function(n){return h.indexOf(n)},o=[];
+R.forEach(function(r,k){var n=nz(r[ix("nombre")]);if(!n)return;var s=nz(r[ix("stock")]).toLowerCase();
+o.push({id:k+1,n:n,c:nz(r[ix("categoria")])||"Otros",p:Number(String(r[ix("precio")]||"").replace(/\D/g,"")),s:/^(si|sí|hay|stock)$/.test(s)?1:/^(no|agotado)$/.test(s)?2:0,t:nz(r[ix("talles")]).split(/[\/;,]/).map(nz).filter(Boolean),img:img(r[ix("foto")])})});return o}
+function start(){CATS=["Todo"].concat(P.map(function(p){return p.c}).filter(function(c,i,a){return a.indexOf(c)===i}));cat="Todo";drawChips();drawGrid();drawPays();draw()}
+if(CFG.sheet){$("grid").innerHTML="<p>Cargando catálogo...</p>";drawPays();draw();fetch(CFG.sheet).then(function(r){return r.text()}).then(function(t){P=fromSheet(t);start()}).catch(function(){$("grid").innerHTML="<p>No pudimos cargar el catálogo. Escribinos por WhatsApp.</p>"})}else start();
+</script>
+</body>
+</html>
